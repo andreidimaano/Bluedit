@@ -16,6 +16,8 @@ class UsernamePasswordInput {
     @Field()
     username: string
     @Field()
+    email: string
+    @Field()
     password: string
 }
 
@@ -87,6 +89,7 @@ export class UserResolver {
                 .getKnexQuery()
                 .insert({
                     username: options.username,
+                    email: options.email,
                     password: hashedPassword,
                     created_at: new Date(),
                     updated_at: new Date(),
