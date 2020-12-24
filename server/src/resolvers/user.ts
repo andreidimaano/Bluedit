@@ -47,6 +47,12 @@ export class UserResolver {
         return true;
     }
 
+    @Query(() => [User])
+    users(@Ctx() { em }: MyContext) {
+        return em.find(User, {})
+    }
+    
+
     @Query(() => User, {nullable: true})
     async me (
         @Ctx() { req, em }: MyContext
