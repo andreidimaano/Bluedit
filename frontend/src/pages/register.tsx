@@ -1,8 +1,9 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { Form } from 'formik';
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import { Wrapper } from '../components/Wrapper';
+import { InputField } from '../components/InputField';
 
 interface registerProps {
 
@@ -10,29 +11,48 @@ interface registerProps {
 
 const Register: React.FC<registerProps> = ({}) => {
     return (
-        <Wrapper>
+        <Wrapper variant='small'>
             <Formik 
-                initialValues={{username: '', password: ''}}
+                initialValues={{username: "", password: ""}}
                 onSubmit={(values) => {
                     console.log(values);
+                    // const response = await register(values);
+                    // if (response.data?.register.errors) {
+                    //     setErrors(toErrorMap(response.data.register.errors));
+                    // } else if (response.data?.register.user) {
+                    //     //register user successful
+                    //     router.push('/');
+                    // }
                 }}
             >
-                {({values, handleChange}) => (
-                    <Form>
-                        <FormControl>
-                            <FormLabel htmlFor="username">Username</FormLabel>
-                            <Input 
-                                value={values.username}
-                                onChange={handleChange} 
-                                id="username" 
-                                placeholder="username"
-                            />
-                        </FormControl>
-                    </Form>                  
+                {(props) => (
+                <Form>
+                    <InputField
+                        name="username"
+                        placeholder="username"
+                        label="Username"
+                    />
+                    <Box mt={4}>
+                        <InputField
+                            name="password"
+                            placeholder="password"
+                            label="Password"
+                            type="password"
+                        />
+                    </Box>
+                    <Button 
+                        mt={4} 
+                        type='submit' 
+                        isLoading={props.isSubmitting} 
+                        colorScheme='teal'
+                    >
+                        register
+                    </Button>
+                </Form>   
                 )}
             </Formik>            
         </Wrapper>
-    );
-};
+    )
+}
 
 export default Register
