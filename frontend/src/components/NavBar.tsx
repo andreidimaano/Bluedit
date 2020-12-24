@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, Link } from '@chakra-ui/react';
 import React from 'react'
 
 interface NavBarProps {
@@ -7,8 +7,16 @@ interface NavBarProps {
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
         return (
-            <Box bg="tomato">
-                pretty good
-            </Box>
+            <Flex bg="tomato" p={4}>
+                <Box ml={"auto"}>
+                    <Link mr={2}>
+                        login
+                    </Link>
+                    <Link>
+                        register
+                    </Link>
+                </Box>
+            </Flex>
+            
         );
 }
