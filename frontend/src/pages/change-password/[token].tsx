@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import router from 'next/dist/next-server/lib/router/router';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useState } from 'react';
 import { InputField } from '../../components/InputField';
 import { Wrapper } from '../../components/Wrapper';
 import { useChangePasswordMutation } from '../../generated/graphql';
@@ -13,6 +14,7 @@ import login from '../login';
 const ChangePassword: NextPage<{token: string}> = ({token}) => {
     const router = useRouter();
     const [, changePassword] = useChangePasswordMutation();
+    const [tokenError, setTokenError] = useState('');
 
     return (
     <Wrapper variant='small'>
@@ -24,7 +26,12 @@ const ChangePassword: NextPage<{token: string}> = ({token}) => {
                     token,
                 });
                 if (response.data?.changePassword.errors) {
-                    setErrors(toErrorMap(response.data.changePassword.errors));
+                    //error with token
+                    const errorMap = toErrorMap(response.data.changePassword.errors);
+                    if('token' in errorMap) {
+                        setTokenError(errorMap.token);
+                    }
+                    setErrors(errorMap);
                 } else if (response.data?.changePassword.user) {
                     //register user successful
                     router.push('/');                        
