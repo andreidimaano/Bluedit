@@ -41,7 +41,7 @@ export class UserResolver {
             return true;
         }
 
-        const token = 'sefuhisefuwefoi'
+        const token = 'sefuhisefuwefoi';
 
         await sendEmail(
             email,

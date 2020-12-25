@@ -42,7 +42,8 @@
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "uuid": "^8.3.2"
   },
   "mikro-orm": {
     "useTsNode": true,
