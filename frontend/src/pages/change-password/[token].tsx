@@ -46,6 +46,7 @@ const ChangePassword: NextPage<{token: string}> = ({token}) => {
                     label="New Password"
                     type="password"
                 />
+                {tokenError ? <Box color='red'>{tokenError}</Box> : null}
                 <Button 
                     mt={4} 
                     type='submit' 
