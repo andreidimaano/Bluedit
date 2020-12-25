@@ -6,6 +6,7 @@ import { COOKIE_NAME } from '../constants';
 import { User } from '../entities/User';
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister'
+import { sendEmail } from 'src/utils/sendEmail';
 
 declare module "express-session" {
     interface Session {
@@ -35,9 +36,17 @@ class UserResponse {
 export class UserResolver {
     @Mutation(() => Boolean)
     async forgotPassword(@Arg('email') email: string, @Ctx() {em}: MyContext) {
-        //const user = await em.findOne(User, { email });
-        console.log(email)
-        console.log(em);
+        const user = await em.findOne(User, { email });
+        if(!user){
+            return true;
+        }
+
+        
+        await sendEmail(
+            email,
+            '<a href="http://localhost:3000/change-password/918quoiuwqe">reset password</a>'
+        );
+        
         return true;
     }
 
