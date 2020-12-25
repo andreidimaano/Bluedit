@@ -48,7 +48,7 @@ export class UserResolver {
             FORGET_PASSWORD_PREFIX + token,
             user.id, 
             'ex', 
-            1000 * 3600 * 3
+            1000 * 3600 * 24 * 3
         ); // 3 days to reset password
 
         await sendEmail(
