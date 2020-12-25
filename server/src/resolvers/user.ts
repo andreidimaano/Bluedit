@@ -1,12 +1,11 @@
-import { User } from '../entities/User';
-import { MyContext } from 'src/types';
-import { Resolver, Mutation, Arg, Field, Ctx, ObjectType, Query } from 'type-graphql';
-import argon2 from 'argon2'
-import {EntityManager} from '@mikro-orm/postgresql'
+import { EntityManager } from '@mikro-orm/postgresql';
+import argon2 from 'argon2';
+import { MyContext } from 'src/types'
+import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver } from 'type-graphql';
 import { COOKIE_NAME } from '../constants';
+import { User } from '../entities/User';
 import { UsernamePasswordInput } from './UsernamePasswordInput';
-import { validate } from 'graphql';
-import { validateRegister } from 'src/utils/validateRegister';
+import { validateRegister } from '../utils/validateRegister'
 
 declare module "express-session" {
     interface Session {
@@ -37,6 +36,8 @@ export class UserResolver {
     @Mutation(() => Boolean)
     async forgotPassword(@Arg('email') email: string, @Ctx() {em}: MyContext) {
         //const user = await em.findOne(User, { email });
+        console.log(email)
+        console.log(em);
         return true;
     }
 
