@@ -22,7 +22,7 @@ const main = async () => {
     const app = express();
 
     const RedisStore = connectRedis(session)
-    let redis = Redis();
+    const redis = new Redis();
 
 
     app.use(

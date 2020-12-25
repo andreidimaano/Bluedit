@@ -6,7 +6,7 @@ import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../constants';
 import { User } from '../entities/User';
 import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister'
-import { sendEmail } from 'src/utils/sendEmail';
+import { sendEmail } from '../utils/sendEmail';
 import {v4} from 'uuid';
 
 declare module "express-session" {
@@ -44,7 +44,7 @@ export class UserResolver {
 
         const token = v4();
 
-        redis.set(
+        await redis.set(
             FORGET_PASSWORD_PREFIX + token,
             user.id, 
             'ex', 
