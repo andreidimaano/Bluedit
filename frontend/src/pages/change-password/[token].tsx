@@ -12,39 +12,32 @@ const ChangePassword: NextPage<{token: string}> = ({token}) => {
     return (
     <Wrapper variant='small'>
         <Formik 
-            initialValues={{usernameOrEmail: "", password: ""}}
+             initialValues={{ newPassword: '' }}
             onSubmit={async (values, { setErrors }) => {
-                const response = await login(values);
-                if (response.data?.login.errors) {
-                    setErrors(toErrorMap(response.data.login.errors));
-                } else if (response.data?.login.user) {
-                    //register user successful
-                    router.push('/');                        
-                }
+                // const response = await login(values);
+                // if (response.data?.login.errors) {
+                //     setErrors(toErrorMap(response.data.login.errors));
+                // } else if (response.data?.login.user) {
+                //     //register user successful
+                //     router.push('/');                        
+                // }
             }}
         >
             {(props) => (
             <Form>
                 <InputField
-                    name="usernameOrEmail"
-                    placeholder="username or email"
-                    label="UsernameOrEmail"
+                    name="newPassword"
+                    placeholder="new password"
+                    label="New Password"
+                    type="password"
                 />
-                <Box mt={4}>
-                    <InputField
-                        name="password"
-                        placeholder="password"
-                        label="Password"
-                        type="password"
-                    />
-                </Box>
                 <Button 
                     mt={4} 
                     type='submit' 
                     isLoading={props.isSubmitting} 
                     colorScheme='teal'
                 >
-                    login
+                    change password
                 </Button>
             </Form>   
             )}
