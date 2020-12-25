@@ -42,7 +42,6 @@
     "mikro-orm": "^4.3.4",
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
-    "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
     "type-graphql": "^1.1.1",
