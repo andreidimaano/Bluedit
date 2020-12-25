@@ -4,7 +4,7 @@ export const validateRegister = (options: UsernamePasswordInput) => {
     if(!options.email.includes('@')){
         return [
             {
-                field: 'username',
+                field: 'email',
                 message: 'invalid email',
             }
         ];
