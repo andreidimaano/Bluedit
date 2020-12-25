@@ -36,6 +36,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "graphql": "^15.4.0",
+    "ioredis": "^4.19.4",
     "mikro-orm": "^4.3.4",
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
