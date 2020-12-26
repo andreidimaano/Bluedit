@@ -5,6 +5,8 @@ import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
 import { useCreatePostMutation } from '../generated/graphql';
 import { useRouter } from 'next/router';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from '../utils/createUrqlClient';
 
 const CreatePost: React.FC<{}> = ({}) => {
     const router = useRouter();
@@ -48,4 +50,4 @@ const CreatePost: React.FC<{}> = ({}) => {
     );
 }
 
-export default CreatePost;
+export default withUrqlClient(createUrqlClient)(CreatePost);
