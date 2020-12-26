@@ -31,24 +31,18 @@ export const CreatePost: React.FC<{}> = ({}) => {
                     />
                     <Box mt={4}>
                         <InputField
-                            name="password"
-                            placeholder="password"
-                            label="Password"
-                            type="password"
+                            name="text"
+                            placeholder="insert here..."
+                            label="Body"
                         />
                     </Box>
-                    <Flex mt={2}>
-                        <NextLink href="/forgot-password">
-                            <Link ml="auto">forgot password?</Link>
-                        </NextLink>
-                    </Flex>
                     <Button 
                         mt={4} 
                         type='submit' 
                         isLoading={props.isSubmitting} 
                         colorScheme='teal'
                     >
-                        login
+                        create post
                     </Button>
                 </Form>   
                 )}
