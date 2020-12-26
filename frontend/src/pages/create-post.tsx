@@ -4,7 +4,7 @@ import React from 'react';
 import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
 
-export const CreatePost: React.FC<{}> = ({}) => {
+const CreatePost: React.FC<{}> = ({}) => {
     return (
         <Wrapper variant="small">
             <Formik 
@@ -41,3 +41,5 @@ export const CreatePost: React.FC<{}> = ({}) => {
         </Wrapper>
     );
 }
+
+export default CreatePost;
