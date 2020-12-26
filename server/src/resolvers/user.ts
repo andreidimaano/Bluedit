@@ -8,6 +8,7 @@ import { UsernamePasswordInput } from './UsernamePasswordInput';
 import { validateRegister } from '../utils/validateRegister'
 import { sendEmail } from '../utils/sendEmail';
 import {v4} from 'uuid';
+import { getConnection } from 'typeorm';
 
 declare module "express-session" {
     interface Session {
@@ -146,18 +147,13 @@ export class UserResolver {
         const hashedPassword = await argon2.hash(options.password);
         let user;
         try {
-            const result = await (em as EntityManager)
-                .createQueryBuilder(User)
-                .getKnexQuery()
-                .insert({
-                    username: options.username,
-                    email: options.email,
-                    password: hashedPassword,
-                    created_at: new Date(),
-                    updated_at: new Date(),
-                })
-                .returning('*');
-                user = result[0];
+            const result = await getConnection().createQueryBuilder().insert().into(User).values({
+                username: options.username,
+                email: options.email,
+                password: hashedPassword,
+            })
+            .returning('*')
+            .execute();
         } catch (err) {
             if(err.detail.includes('already exists')) {
                 return {
@@ -174,7 +170,7 @@ export class UserResolver {
         //store user id session
         //set a cookie on the user
         //keeps them logged in
-        req.session.userId = user.id;
+        //req.session.userId = user.id;
 
         return { user }
     }
