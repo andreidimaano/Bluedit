@@ -13,6 +13,7 @@ export class Post extends BaseEntity{
   @Column()
   title!: string;
 
+  @Field()
   @Column()
   creatorId: number;
 
