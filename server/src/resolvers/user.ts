@@ -125,20 +125,18 @@ export class UserResolver {
     
 
     @Query(() => User, {nullable: true})
-    async me (
-        @Ctx() { req }: MyContext
-    ) {
+    me(@Ctx() { req }: MyContext) {
         if(!req.session.userId){
             return null;
         }
 
-        return await User.findOne(req.session.userId);
+        return User.findOne(req.session.userId);
     }
 
     @Mutation(() => UserResponse)
     async register(
         @Arg('options') options: UsernamePasswordInput,
-        @Ctx() {em, req} : MyContext
+        @Ctx() {req} : MyContext
     ): Promise<UserResponse> {
         const errors= validateRegister(options);
         if(errors) {
