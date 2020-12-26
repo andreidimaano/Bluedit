@@ -5,7 +5,7 @@ import { cacheExchange } from '@urql/exchange-graphcache'
 import { filter, pipe, tap } from 'wonka';
 import Router from 'next/router'
 
-export const errorExchange: Exchange = ({ forward }) => ops$ => {
+const errorExchange: Exchange = ({ forward }) => ops$ => {
     return pipe(
         forward(ops$),
         tap(({ error }) => {
@@ -70,6 +70,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
                 },
             },
         }),
+        errorExchange,
         ssrExchange, 
         fetchExchange
     ],
