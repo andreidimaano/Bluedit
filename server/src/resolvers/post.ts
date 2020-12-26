@@ -27,15 +27,15 @@ export class PostResolver {
     async updatePost(
         @Arg('id', () => Int) id: number,
         @Arg('title', () => String, {nullable: true}) title: string, //type inferred
-        @Ctx() {em}: MyContext
     ): Promise<Post | null>  {
-        const post = await em.findOne(Post, {id});
+        //1 sql query to fetch
+        const post = await Post.findOne(id);
         if(!post) {
             return null;
         }
+        //1 sql to update
         if (typeof title !== 'undefined') {
-            post.title = title;
-            await em.persistAndFlush(post);
+            await Post.update({id}, {title});
         }
         return post;
     }
