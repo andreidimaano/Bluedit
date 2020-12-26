@@ -1,14 +1,13 @@
-import { EntityManager } from '@mikro-orm/postgresql';
 import argon2 from 'argon2';
-import { MyContext } from 'src/types'
+import { MyContext } from 'src/types';
 import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver } from 'type-graphql';
+import { getConnection } from 'typeorm';
+import { v4 } from 'uuid';
 import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from '../constants';
 import { User } from '../entities/User';
-import { UsernamePasswordInput } from './UsernamePasswordInput';
-import { validateRegister } from '../utils/validateRegister'
 import { sendEmail } from '../utils/sendEmail';
-import {v4} from 'uuid';
-import { getConnection } from 'typeorm';
+import { validateRegister } from '../utils/validateRegister';
+import { UsernamePasswordInput } from './UsernamePasswordInput';
 
 declare module "express-session" {
     interface Session {
@@ -154,6 +153,7 @@ export class UserResolver {
             })
             .returning('*')
             .execute();
+            user = result.raw[0]
         } catch (err) {
             if(err.detail.includes('already exists')) {
                 return {
@@ -170,7 +170,7 @@ export class UserResolver {
         //store user id session
         //set a cookie on the user
         //keeps them logged in
-        //req.session.userId = user.id;
+        req.session.userId = user.id;
 
         return { user }
     }
