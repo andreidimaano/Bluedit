@@ -47,7 +47,7 @@ export class PostResolver {
 
     @Mutation(() => Boolean)
     async deletePosts(): Promise<Boolean>  {
-        await Post.clear();
+        await Post.delete({});
         return true;
     }
 }
