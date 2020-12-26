@@ -17,8 +17,12 @@ const CreatePost: React.FC<{}> = ({}) => {
             <Formik 
                 initialValues={{title: "", text: ""}}
                 onSubmit={async (values) => {
-                    await createPost({ input: values });
-                    router.push('/');
+                    const {error} = await createPost({ input: values });
+                    if (error?.message.includes('not authenticated')) {
+                        router.push('/login');
+                    } else {
+                        router.push('/');
+                    }
                 }}
             >
                 {(props) => (
