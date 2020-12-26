@@ -1,17 +1,25 @@
 import { Box, Button } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { InputField } from '../components/InputField';
 import { Wrapper } from '../components/Wrapper';
-import { useCreatePostMutation } from '../generated/graphql';
+import { useCreatePostMutation, useMeQuery } from '../generated/graphql';
 import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { Layout } from '../components/Layout';
 
 const CreatePost: React.FC<{}> = ({}) => {
+    const [{data, fetching}] = useMeQuery();
     const router = useRouter();
     const [,createPost] = useCreatePostMutation();
+    useEffect(() => {
+        //user experience so that users don't write a bunch of text 
+        //and then get redirected
+        if (!fetching && !data?.me) {
+            router.replace('/login');
+        }
+    })
     return (
         <Layout variant="small">
             <Formik 
