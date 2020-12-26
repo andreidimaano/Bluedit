@@ -146,7 +146,11 @@ export class UserResolver {
         const hashedPassword = await argon2.hash(options.password);
         let user;
         try {
-            const result = await getConnection().createQueryBuilder().insert().into(User).values({
+            const result = await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(User)
+            .values({
                 username: options.username,
                 email: options.email,
                 password: hashedPassword,
