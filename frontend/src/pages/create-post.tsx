@@ -22,6 +22,7 @@ const CreatePost: React.FC<{}> = ({}) => {
                     />
                     <Box mt={4}>
                         <InputField
+                            textarea
                             name="text"
                             placeholder="insert here..."
                             label="Body"
