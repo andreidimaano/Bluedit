@@ -18,6 +18,10 @@ export class Post extends BaseEntity{
   text!: string;
 
   @Field()
+  @Column({type: "int", default: 0})
+  points!: number;
+
+  @Field()
   @Column()
   creatorId: number;
 
