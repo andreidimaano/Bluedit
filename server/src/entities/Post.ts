@@ -8,6 +8,10 @@ export class Post extends BaseEntity{
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Field()
+  @Column()
+  title!: string;
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
@@ -15,8 +19,4 @@ export class Post extends BaseEntity{
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @Field()
-  @Column()
-  title!: string;
 }
