@@ -11,7 +11,7 @@ export const CreatePost: React.FC<{}> = ({}) => {
     return (
         <Wrapper variant="small">
             <Formik 
-                initialValues={{usernameOrEmail: "", password: ""}}
+                initialValues={{title: "", text: ""}}
                 onSubmit={async (values, { setErrors }) => {
                     const response = await login(values);
                     if (response.data?.login.errors) {
@@ -25,9 +25,9 @@ export const CreatePost: React.FC<{}> = ({}) => {
                 {(props) => (
                 <Form>
                     <InputField
-                        name="usernameOrEmail"
-                        placeholder="username or email"
-                        label="UsernameOrEmail"
+                        name="title"
+                        placeholder="Title"
+                        label="Title"
                     />
                     <Box mt={4}>
                         <InputField
