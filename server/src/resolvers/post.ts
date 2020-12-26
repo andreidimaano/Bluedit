@@ -17,13 +17,9 @@ export class PostResolver {
 
     //create post
     @Mutation(() => Post)
-    async createPost(
-        @Arg('title') title: string, //type inferred
-        @Ctx() {em}: MyContext
-    ): Promise<Post>  {
-        const post = em.create(Post, {title});
-        await em.persistAndFlush(post);
-        return post;
+    async createPost(@Arg('title') title: string ): Promise<Post>  {
+        //2 sql queries
+        return Post.create({title}).save();
     }
 
     //Update post
