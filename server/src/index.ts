@@ -13,6 +13,7 @@ import { HelloResolver } from './resolvers/hello';
 import { PostResolver } from './resolvers/post';
 import { UserResolver } from './resolvers/user';
 import { sendEmail } from './utils/sendEmail';
+import {} from 'typeorm'
 
 const main = async () => {
     sendEmail('bob@bob.com', 'hello there');
