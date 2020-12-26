@@ -99,14 +99,6 @@
     fs-extra "9.0.1"
     umzug "2.3.0"
 
-"@mikro-orm/postgresql@^4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/postgresql/-/postgresql-4.3.4.tgz#68cc68d9dba2f65d588fb490bbd7f7ece6e5efd2"
-  integrity sha512-aYON9Z17E4pw+XaUk8PP8yiXNR9KFoxehjCx2D32vysPdomEaAz1tuuXBkcdnDymPPjG39nwIfonowIn2w921A==
-  dependencies:
-    "@mikro-orm/knex" "^4.3.4"
-    pg "8.5.1"
-
 "@mikro-orm/reflection@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@mikro-orm/reflection/-/reflection-4.3.4.tgz#946aa8d97abbe03ab45310e477efd89e5b64032f"
@@ -3349,7 +3341,7 @@ pg-types@^2.1.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg@8.5.1, pg@^8.5.1:
+pg@^8.5.1:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/pg/-/pg-8.5.1.tgz#34dcb15f6db4a29c702bf5031ef2e1e25a06a120"
   integrity sha512-9wm3yX9lCfjvA98ybCyw2pADUivyNWT/yIP4ZcDVpMN0og70BUWYEGXPCTAQdGTAqnytfRADb7NERrY1qxhIqw==
