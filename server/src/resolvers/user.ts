@@ -179,12 +179,12 @@ export class UserResolver {
     async login(
         @Arg('usernameOrEmail') usernameOrEmail: string,
         @Arg('password') password: string,
-        @Ctx() {em, req } : MyContext
+        @Ctx() { req } : MyContext
     ) : Promise<UserResponse> {
-        const user = await em.findOne(User, 
-            usernameOrEmail.includes('@') ? 
-            { email: usernameOrEmail }
-            : { username: usernameOrEmail }
+        const user = await User.findOne(
+            usernameOrEmail.includes('@') 
+            ? { where: { email: usernameOrEmail }}
+            : { where: { username: usernameOrEmail }}
         );
         if(!user) {
             return {
@@ -210,7 +210,7 @@ export class UserResolver {
 
         req.session!.userId = user.id;
 
-        return { user,};
+        return { user };
     }
 
     @Mutation (() => Boolean)
