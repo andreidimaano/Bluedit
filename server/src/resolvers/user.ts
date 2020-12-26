@@ -96,7 +96,7 @@ export class UserResolver {
     @Mutation(() => Boolean)
     async forgotPassword(@Arg('email') email: string, @Ctx() {redis}: MyContext) {
         const user = await User.findOne({where: {email}});
-        
+
         if(!user){
             return true;
         }
@@ -119,8 +119,8 @@ export class UserResolver {
     }
 
     @Query(() => [User])
-    users(@Ctx() { em }: MyContext) {
-        return em.find(User, {})
+    users() {
+        return User.find();
     }
     
 
