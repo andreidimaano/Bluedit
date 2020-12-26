@@ -39,8 +39,9 @@ export class UserResolver {
     async changePassword(
         @Arg('token') token: string, 
         @Arg('newPassword') newPassword: string, 
-        @Ctx() { em, redis, req }: MyContext
+        @Ctx() {redis, req }: MyContext
     ): Promise<UserResponse> {
+        //Error 1: Insufficient Length
         if(newPassword.length <= 2) {
             return {
                 errors: [
@@ -52,6 +53,7 @@ export class UserResolver {
             };
         }
 
+        //Error 2: Expired Token
         const key = FORGET_PASSWORD_PREFIX + token
         const userId = await redis.get(key);
         if(!userId) {
@@ -65,8 +67,9 @@ export class UserResolver {
             };
         }
 
-        const user = await em.findOne(User, { id: parseInt(userId) });
-
+        //Error 3: Invalid User
+        const userIdNum = parseInt(userId);
+        const user = await User.findOne(userIdNum);
         if(!user) {
             return {
                 errors: [
@@ -78,10 +81,13 @@ export class UserResolver {
             };
         }
 
-        user.password = await argon2.hash(newPassword);
-        await em.persistAndFlush(user);
-        await redis.del(key);
+        //Valid case
+        await User.update(
+            {id: userIdNum}, 
+            {password: await argon2.hash(newPassword)},
+        );
 
+        await redis.del(key);
         req.session.userId = user.id;
 
         return { user };
