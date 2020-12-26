@@ -94,8 +94,9 @@ export class UserResolver {
     }
 
     @Mutation(() => Boolean)
-    async forgotPassword(@Arg('email') email: string, @Ctx() {em, redis}: MyContext) {
-        const user = await em.findOne(User, { email });
+    async forgotPassword(@Arg('email') email: string, @Ctx() {redis}: MyContext) {
+        const user = await User.findOne({where: {email}});
+        
         if(!user){
             return true;
         }
