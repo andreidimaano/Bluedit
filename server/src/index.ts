@@ -21,11 +21,9 @@ const main = async () => {
         username: 'postgres',
         password: 'postgres',
         logging: true,
-        synchronize: false,
+        synchronize: true,
         entities: [Post, User],
     })
-
-    await Post.delete({})
 
     const app = express();
 
