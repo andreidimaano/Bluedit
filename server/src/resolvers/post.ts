@@ -2,6 +2,7 @@ import { isAuth } from '../middleware/isAuth';
 import { MyContext } from 'src/types';
 import { Arg, Ctx, Field, InputType, Int, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Post } from '../entities/Post';
+import { getConnection } from 'typeorm';
 
 @InputType()
 class PostInput {
@@ -15,8 +16,24 @@ class PostInput {
 @Resolver()
 export class PostResolver {
     @Query(() => [Post])
-    async posts(): Promise<Post[]>  {
-        return Post.find();
+    async posts(
+        @Arg('limit', () => Int) limit: number,
+        @Arg('cursor', () => String, { nullable: true}) cursor: string | null
+    ): Promise<Post[]>  {
+        const realLimit = Math.min(50, limit); //will always cap at 50
+        const qb =  getConnection()
+            .getRepository(Post)
+            .createQueryBuilder('p')
+            .orderBy('"createdAt"', 'DESC') //most recent at the top
+            .take(realLimit);
+        
+        if(cursor) {
+            qb.where('"createdAt" < :cursor' , { 
+                cursor: new Date(parseInt(cursor)) 
+            });
+        }
+
+        return qb.getMany();
     }
 
     //single post
