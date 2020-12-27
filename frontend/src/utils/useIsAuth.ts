@@ -9,7 +9,7 @@ export const useIsAuth = () => {
         //user experience so that users don't write a bunch of text 
         //and then get redirected
         if (!fetching && !data?.me) {
-            router.replace('/login');
+            router.replace('/login?next=' + router.pathname);
         }
     }, [fetching, data, router])
 }
