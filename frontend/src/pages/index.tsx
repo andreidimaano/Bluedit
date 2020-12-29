@@ -1,9 +1,10 @@
 import { ArrowUpIcon, ArrowDownIcon, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons"
-import { Box, Button, Flex, Heading, Icon, Link, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, Icon, IconButton, Link, Stack, Text } from "@chakra-ui/react"
 import { withUrqlClient } from "next-urql"
 import NextLink from 'next/link'
 import React, { useState } from "react"
 import { Layout } from "../components/Layout"
+import { UpdootSection } from "../components/UpdootSection"
 import { usePostsQuery } from "../generated/graphql"
 import { createUrqlClient } from "../utils/createUrqlClient"
 
@@ -36,11 +37,7 @@ const Index = () => {
                     <Stack justify="center" spacing={4}>
                     {data!.posts.posts.map((p) => (
                         <Flex maxW="xl" key={p.id} px={5} py={2} shadow="md" borderWidth="1px">
-                            <Flex direction="column" justify="center" align="center" mr={4}>
-                                <TriangleUpIcon size="24px"/>
-                                {p.points}
-                                <TriangleDownIcon size="24px"/>
-                            </Flex>
+                            <UpdootSection post={p}/>
                             <Box>
                                 <Text>Post by {p.creator.username}</Text>
                                 <Heading fontSize='xl'>{p.title}</Heading>

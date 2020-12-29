@@ -1,3 +1,4 @@
+import { Updoot } from '../entities/Updoot';
 import { MyContext } from 'src/types';
 import { Arg, Ctx, Field, FieldResolver, InputType, Int, Mutation, ObjectType, Query, Resolver, Root, UseMiddleware } from 'type-graphql';
 import { getConnection } from 'typeorm';
@@ -37,20 +38,38 @@ export class PostResolver {
         const isUpdoot = value !== -1;
         const realValue = isUpdoot ? 1 : -1;
         const { userId } = req.session;
-        
-        await getConnection().query(
-            `
-        START TRANSACTION;
+       
+        const updoot = await Updoot.findOne({where: {postId, userId}})
+        if(updoot && updoot.value !== realValue){
+            //user has previously voted before
+            await getConnection().transaction(async tm => {
+                await tm.query(`        
+                    update updoot
+                    set value = $3
+                    where "postId" = $2 and "userId" = $1
+                `, [userId, postId, realValue]);
 
-        insert into updoot("userId", "postId", value)
-        values (${userId},${postId},${realValue});
+                await tm.query(`        
+                    update post
+                    set points = points + $2
+                    where id = $1
+                `, [postId, 2 * realValue]);
+            })
+        } else if(!updoot) {
+            //has never voted
+            await getConnection().transaction(async tm => {
+                await tm.query(`        
+                    insert into updoot("userId", "postId", value)
+                    values ($1, $2, $3)
+                `, [userId, postId, realValue]);
 
-        update post
-        set points = points + ${realValue}
-        where id = ${postId};
-
-        COMMIT;
-        `);
+                await tm.query(`
+                    update post
+                    set points = points + $1
+                    where id = $2
+                `, [realValue, postId])
+            })
+        }
 
         return true;
     }

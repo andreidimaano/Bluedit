@@ -50,7 +50,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         );
     }
     return (
-        <Flex zIndex={0} position="sticky" top={0} bg="tomato" py={4} px={16} justify="space-between" align="center">
+        <Flex zIndex={1} position="sticky" top={0} bg="tomato" py={4} px={16} justify="space-between" align="center">
             <Heading>
                     <NextLink href='/' >
                         <Link style={{textDecoration: "none"}}>
