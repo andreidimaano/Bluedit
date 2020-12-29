@@ -1,9 +1,8 @@
-import { isAuth } from '../middleware/isAuth';
 import { MyContext } from 'src/types';
 import { Arg, Ctx, Field, FieldResolver, InputType, Int, Mutation, ObjectType, Query, Resolver, Root, UseMiddleware } from 'type-graphql';
-import { Post } from '../entities/Post';
 import { getConnection } from 'typeorm';
-import { Updoot } from '../entities/Updoot';
+import { Post } from '../entities/Post';
+import { isAuth } from '../middleware/isAuth';
 
 @InputType()
 class PostInput {
@@ -25,7 +24,7 @@ class PaginatedPosts {
 export class PostResolver {
     @FieldResolver(() => String)
     textSnippet(@Root() root: Post) {
-        return root.text.slice(0, 300);
+        return root.text.slice(0, 700);
     }
 
     @Mutation(() => Boolean)

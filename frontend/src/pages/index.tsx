@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react"
+import { ArrowUpIcon, ArrowDownIcon, TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons"
+import { Box, Button, Flex, Heading, Icon, Link, Stack, Text } from "@chakra-ui/react"
 import { withUrqlClient } from "next-urql"
 import NextLink from 'next/link'
 import React, { useState } from "react"
@@ -7,7 +8,7 @@ import { usePostsQuery } from "../generated/graphql"
 import { createUrqlClient } from "../utils/createUrqlClient"
 
 const Index = () => {
-    const [variables, setVariables] = useState({limit: 10, cursor: null as null | string});
+    const [variables, setVariables] = useState({limit: 15, cursor: null as null | string});
     const [{ data, fetching }] = usePostsQuery({
         variables,
     });
@@ -18,8 +19,8 @@ const Index = () => {
 
     return (
         <Layout>
-            <Flex>
-                <Box bg="#D7DFE2" p={5} w="100%" shadow="md" borderWidth="1px">
+            <Flex justify="center" align="center">
+                <Box bg="#D7DFE2" p={5} maxW="xl" w="100%" shadow="md" borderWidth="1px">
                     <NextLink href="/create-post">
                         <Link>
                             create post
@@ -31,14 +32,24 @@ const Index = () => {
             {!data && fetching ? (
             <div>loading...</div> 
             ) : (
-                <Stack spacing={4}>
+                <Flex justify="center">
+                    <Stack justify="center" spacing={4}>
                     {data!.posts.posts.map((p) => (
-                        <Box key={p.id} p={5} shadow="md" borderWidth="1px">
-                            <Heading fontSize='xl'>{p.title}</Heading>
-                            <Text mt={4}>{p.textSnippet}</Text>
-                        </Box>
+                        <Flex maxW="xl" key={p.id} px={5} py={2} shadow="md" borderWidth="1px">
+                            <Flex direction="column" justify="center" align="center" mr={4}>
+                                <TriangleUpIcon size="24px"/>
+                                {p.points}
+                                <TriangleDownIcon size="24px"/>
+                            </Flex>
+                            <Box>
+                                <Text>Post by {p.creator.username}</Text>
+                                <Heading fontSize='xl'>{p.title}</Heading>
+                                <Text mt={2}>{p.textSnippet}</Text>
+                            </Box>
+                        </Flex>
                     ))}
-                </Stack>
+                    </Stack>
+                </Flex>
             )}
             {data && data.posts.hasMore ? (
             <Flex>
