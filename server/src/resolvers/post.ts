@@ -3,6 +3,7 @@ import { MyContext } from 'src/types';
 import { Arg, Ctx, Field, FieldResolver, InputType, Int, Mutation, ObjectType, Query, Resolver, Root, UseMiddleware } from 'type-graphql';
 import { Post } from '../entities/Post';
 import { getConnection } from 'typeorm';
+import { Updoot } from '../entities/Updoot';
 
 @InputType()
 class PostInput {
@@ -25,6 +26,34 @@ export class PostResolver {
     @FieldResolver(() => String)
     textSnippet(@Root() root: Post) {
         return root.text.slice(0, 300);
+    }
+
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async vote(
+        @Arg('postId', () => Int) postId: number,
+        @Arg('value', () => Int) value: number,
+        @Ctx() {req}: MyContext
+    ) {
+        const isUpdoot = value !== -1;
+        const realValue = isUpdoot ? 1 : -1;
+        const { userId } = req.session;
+        
+        await getConnection().query(
+            `
+        START TRANSACTION;
+
+        insert into updoot("userId", "postId", value)
+        values (${userId},${postId},${realValue});
+
+        update post
+        set points = points + ${realValue}
+        where id = ${postId};
+
+        COMMIT;
+        `);
+
+        return true;
     }
 
     @Query(() => PaginatedPosts)
@@ -55,26 +84,7 @@ export class PostResolver {
         limit $1
         `, replacements);
 
-        // const qb =  getConnection()
-        //     .getRepository(Post)
-        //     .createQueryBuilder('p')
-        //     .innerJoinAndSelect(
-        //         "p.creator",
-        //         "u",
-        //         'u.id = p."creatorId"'
-        //     )
-        //     .orderBy('p."createdAt"', 'DESC') //most recent at the top
-        //     .take(morePostsLimit);
-        
-        // if(cursor) {
-        //     qb.where('p."createdAt" < :cursor' , { 
-        //         cursor: new Date(parseInt(cursor)) 
-        //     });
-        // }
-
-        // const posts = await qb.getMany();
-
-        console.log('posts: ', posts)
+        //console.log('posts: ', posts)
 
         return { 
             posts: posts.slice(0, realLimit), 
