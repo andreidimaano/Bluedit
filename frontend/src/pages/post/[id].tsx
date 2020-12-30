@@ -31,14 +31,21 @@ export const Post = ({}) => {
     
     return (
         <Layout>
-            <Heading mb={4}>{data.post.title}</Heading>
-            <Box mb={4}>
-                {data.post.text}
-            </Box>
-            <EditPostDeleteHorizontalButtons 
-                id={data.post.id} 
-                creatorId={data.post.creator.id}
-            />
+            <Flex backgroundColor="white" shadow="md" maxW="100%" borderWidth="1px">
+                <Flex width="100%" px={8} pt={2} pb={5}>
+                    <Box width="100%">
+                        <Text fontSize="xs">Posted by {data.post.creator.username}</Text>
+                            <Heading mb={4}>{data.post.title}</Heading>                     
+                        <Text mt={4}>{data.post.text}</Text>
+                        <Box mt={4}>
+                            <EditPostDeleteHorizontalButtons
+                                id={data.post.id} 
+                                creatorId={data.post.creator.id}
+                            />
+                        </Box>
+                    </Box>
+                </Flex>
+            </Flex>
         </Layout>
     );
 }

@@ -11,12 +11,17 @@ import { createUrqlClient } from "../utils/createUrqlClient"
 const Index = () => {
     const [variables, setVariables] = useState({limit: 15, cursor: null as null | string});
     const [{ data: meData }] = useMeQuery();
-    const [{ data, fetching }] = usePostsQuery({
+    const [{ data, error, fetching }] = usePostsQuery({
         variables,
     });
 
     if(!fetching && !data) {
-        return <div>failed to get data</div>;
+        return (
+            <div>
+                <div>failed to get data</div>
+                <div>{error?.message}</div>
+            </div>
+        );
     }
 
     return (
@@ -42,15 +47,15 @@ const Index = () => {
                     !p ? null : (
                         <Flex key={p.id} backgroundColor="white" shadow="md" maxW="xl" borderWidth="1px">
                             <UpdootSection post={p}/>
-                            <Flex width="100%" px={5} py={5}>
+                            <Flex width="100%" px={5} py={2}>
                                 <Box width="100%">
-                                    <Text>Post by {p.creator.username}</Text>
+                                    <Text fontSize="xs">Posted by {p.creator.username}</Text>
                                     <NextLink href="/post/[id]" as={`/post/${p.id}`}>
                                         <Link>
                                             <Heading fontSize='xl'>{p.title}</Heading>
                                         </Link> 
                                     </NextLink>                       
-                                    <Text mt={2}>{p.textSnippet}</Text>
+                                    <Text mt={4}>{p.textSnippet}</Text>
                                 </Box>
                             </Flex>
                             <EditPostDeleteButtons id={p.id} creatorId={p.creator.id}/>
