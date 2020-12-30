@@ -1,5 +1,5 @@
 <h1 align="center">
-:blue_book: Blueit
+:blue_book: Bluedit
 </h1>
 <p align="center">
 I use reddit pretty often, and I was looking for a project to work on during winter break. I decided to go through Ben Awad's <a href="https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=40168s">full stack tutorial</a>. I made changes to the UI so that it would reflect the actual reddit website. Overall, this project really helped me understand how to frontend and backend components work together. Below are some notes I took, feel free to read my thoughts or comment if I'm wrong about anything!
