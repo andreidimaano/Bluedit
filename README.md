@@ -2,14 +2,14 @@
 Reddit
 </h1>
 <p align="center">
-I use reddit pretty often, and I was looking for a project to work on during winter break. I decided to go through Ben Awad's <a href="https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=40168s">full stack tutorial</a>. I made changes to the UI so that it would reflect the actual reddit website. Overall, this project really helped me understand how to frontend and backend components work together. 
+I use reddit pretty often, and I was looking for a project to work on during winter break. I decided to go through Ben Awad's <a href="https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=40168s">full stack tutorial</a>. I made changes to the UI so that it would reflect the actual reddit website. Overall, this project really helped me understand how to frontend and backend components work together. Below are some notes I took, feel free to read my thoughts or comment if I'm wrong about anything!
 </p>
 
 <h1 align="center">
 🏋️ Tech Stack
 </h1>
 
-## Backend
+## 👨‍💻 Backend
 ### Apollo GraphQL
 According to the <a href="https://www.apollographql.com/docs/apollo-server/schema/schema/#:~:text=Your%20GraphQL%20server%20uses%20a,execute%20against%20your%20data%20graph.">Apollo docs</a> a schema defines a hierarchy of types with fields that are populated from your back-end data stores. I use GraphQL in order to run CRUD operations on my database. I use Code-first development - defining the resolver first then defining the Schema because it works well with typescript. I used the <a href="https://typegraphql.com/">Type-GraphQL</a> library for Code-first development.
 
@@ -23,7 +23,7 @@ Using <a href="https://typeorm.io/#/">TypeORM</a> with TypeGraphQL is very helpf
 ### Express
 <a href="https://expressjs.com/">Express</a> is a middleware technology. I use it in conjunction with <a href="https://www.apollographql.com/docs/apollo-server/#:~:text=Apollo%20Server%20is%20an%20open,use%20data%20from%20any%20source.">Apollo-Server</a>. I can use ```req.session``` to store any values I want. For Example, I use req.session to store userId's when a user logins or registers. I could store the whole User object in req.session, however, I changed the User object several times during this project.
 
-## Frontend
+## 👨‍🎨 Frontend
 ### NextJS
 <a href="https://nextjs.org/">NextJS</a> is really fun to use. They make routing really simple.
 
