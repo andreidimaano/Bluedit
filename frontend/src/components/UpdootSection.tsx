@@ -12,7 +12,7 @@ export const UpdootSection: React.FC<UpdootSectionProps> = ({post}) => {
     const [, vote] = useVoteMutation();
 
     return (
-        <Flex direction="column"  align="center" mr={4}>
+        <Flex direction="column" backgroundColor="#F8F9FA" px={2} py={2} align="center">
             <IconButton
                 onClick={async () => {
                     if(post.voteStatus === 1) {
