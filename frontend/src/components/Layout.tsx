@@ -11,7 +11,7 @@ export const Layout: React.FC<LayoutProps> = ({children, variant}) => {
     return (
     <>
         <NavBar/>
-        <Box backgroundColor="#DAE0E6">
+        <Box backgroundColor="#DAE0E6" minH={"100vh"}>
             <Wrapper variant={variant}>
                 {children}
             </Wrapper>

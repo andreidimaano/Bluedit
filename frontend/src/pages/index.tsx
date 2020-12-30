@@ -1,16 +1,16 @@
-import { DeleteIcon } from "@chakra-ui/icons"
-import { Box, Button, Flex, Heading, IconButton, Link, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react"
 import { withUrqlClient } from "next-urql"
 import NextLink from 'next/link'
 import React, { useState } from "react"
+import { EditPostDeleteButtons } from "../components/EditPostDeleteButtons"
 import { Layout } from "../components/Layout"
 import { UpdootSection } from "../components/UpdootSection"
-import { useDeletePostMutation, usePostsQuery } from "../generated/graphql"
+import { useMeQuery, usePostsQuery } from "../generated/graphql"
 import { createUrqlClient } from "../utils/createUrqlClient"
 
 const Index = () => {
     const [variables, setVariables] = useState({limit: 15, cursor: null as null | string});
-    const [, deletePost] = useDeletePostMutation();
+    const [{ data: meData }] = useMeQuery();
     const [{ data, fetching }] = usePostsQuery({
         variables,
     });
@@ -23,7 +23,7 @@ const Index = () => {
         <Layout>
             <Flex justify="center" align="center">
                 <Flex backgroundColor="white" p={5} maxW="xl" w="100%" shadow="md" borderWidth="1px" >
-                    <Box bg="#E2E8F0"  w="100%" p={4} >
+                    <Box borderWidth="1px" borderRadius="md" bg="#EDF2F7"  w="100%" p={4} >
                         <NextLink href="/create-post">
                             <Link>
                                 create post
@@ -42,7 +42,7 @@ const Index = () => {
                     !p ? null : (
                         <Flex key={p.id} backgroundColor="white" shadow="md" maxW="xl" borderWidth="1px">
                             <UpdootSection post={p}/>
-                            <Flex width="100%" px={5} py={2}>
+                            <Flex width="100%" px={5} py={5}>
                                 <Box width="100%">
                                     <Text>Post by {p.creator.username}</Text>
                                     <NextLink href="/post/[id]" as={`/post/${p.id}`}>
@@ -52,15 +52,8 @@ const Index = () => {
                                     </NextLink>                       
                                     <Text mt={2}>{p.textSnippet}</Text>
                                 </Box>
-                                <IconButton 
-                                    aria-label="Delete Post"
-                                    icon={<DeleteIcon/>}
-                                    colorScheme="gray"
-                                    onClick={() => {
-                                        deletePost({id: p.id})
-                                    }}
-                                />
                             </Flex>
+                            <EditPostDeleteButtons id={p.id} creatorId={p.creator.id}/>
                         </Flex>
                     ))}
                     </Stack>

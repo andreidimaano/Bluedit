@@ -1,29 +1,22 @@
 import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { Layout } from '../../components/Layout';
-import { usePostQuery } from '../../generated/graphql';
+import { UpdootSection } from '../../components/UpdootSection';
 import { createUrqlClient } from '../../utils/createUrqlClient';
+import { useGetPostFromUrl } from '../../utils/useGetPostFromUrl';
+import { PostSnippetFragment} from '../../generated/graphql';
+import { EditPostDeleteHorizontalButtons } from '../../components/EditPostDeleteHorizontalButtons';
 
 
 export const Post = ({}) => {
-    const router = useRouter();
-    //console.log(router)
-    //router is an object that contains information about the url
-    const intId = typeof router.query.id === 'string' ? parseInt(router.query.id) : -1;
-    const [{data, fetching}] = usePostQuery({
-        pause: intId === -1,
-        variables: {
-            id:  intId
-        }
-    });
+    const [{data, fetching}] = useGetPostFromUrl();
 
     if(fetching) {
         return (
             <Layout>
-                <div>loading</div>
+                <div>Loading Post...</div>
             </Layout>
         );
     }
@@ -38,18 +31,14 @@ export const Post = ({}) => {
     
     return (
         <Layout>
-            <Flex px={5} py={2} shadow="md" borderWidth="1px">
-                {/* <UpdootSection post={p}/> */}
-                <Box>
-                    <Text>Post by {data.post.creator.username}</Text>
-                    <NextLink href="/post/[id]" as={`/post/${data.post.id}`}>
-                        <Link>
-                            <Heading fontSize='xl'>{data.post.title}</Heading>
-                        </Link> 
-                    </NextLink>                       
-                    <Text mt={2}>{data.post.text}</Text>
-                </Box>
-            </Flex>
+            <Heading mb={4}>{data.post.title}</Heading>
+            <Box mb={4}>
+                {data.post.text}
+            </Box>
+            <EditPostDeleteHorizontalButtons 
+                id={data.post.id} 
+                creatorId={data.post.creator.id}
+            />
         </Layout>
     );
 }

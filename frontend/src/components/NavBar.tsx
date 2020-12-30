@@ -37,7 +37,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         body = (
             <Flex align="center">
                 <NextLink href="/create-post">
-                    <Button mr={4} as={Link}>
+                    <Button backgroundColor="#EDF2F7" mr={4} as={Link}>
                         create post
                     </Button>
                 </NextLink>
@@ -45,7 +45,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                 <Button
                     onClick={() => {
                         logout();
-                    }} 
+                    }}
                     isLoading={logoutFetching}
                     variant="link"
                 >
@@ -58,7 +58,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         <Flex zIndex={1} position="sticky" top={0} bg="white" py={4} px={16} align="center">
             <NextLink href='/' >
                 <Link style={{textDecoration: "none"}}>
-                    <Heading><Text color="tomato">reddit</Text></Heading>
+                    <Heading><Text style={{color: 'red'}}>reddit</Text></Heading>
                 </Link>
             </NextLink>
             <Box ml={'auto'}>{body}</Box>

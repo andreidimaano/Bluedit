@@ -1,7 +1,7 @@
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Flex, IconButton, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { PostSnippetFragment, useVoteMutation } from '../generated/graphql';
+import { Post, PostSnippetFragment, useVoteMutation } from '../generated/graphql';
 
 interface UpdootSectionProps {
     post: PostSnippetFragment;

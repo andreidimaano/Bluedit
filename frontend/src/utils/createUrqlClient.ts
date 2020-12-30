@@ -67,7 +67,7 @@ const cursorPagination = (): Resolver => {
 export const createUrqlClient = (ssrExchange: any, ctx: any) => { 
     let cookie = ''
     if (isServer()) {
-        cookie = ctx.req.headers.cookie;
+        cookie = ctx?.req?.headers?.cookie;
     }
 
     return ({ 
@@ -127,6 +127,16 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                             }
                         },
                         createPost: (_result, args, cache, info) => {
+                            const allFields = cache.inspectFields('Query');
+                            //cache contains queries
+                            const fieldInfos = allFields.filter(info => info.fieldName === 'posts');
+                            //need to invalidate cache in order to 
+                            //get the most recent post to show up
+                            fieldInfos.forEach((fi) => {
+                                cache.invalidate('Query', 'posts', fi.arguments || {});
+                            })
+                        },
+                        updatePost: (_result, args, cache, info) => {
                             const allFields = cache.inspectFields('Query');
                             //cache contains queries
                             const fieldInfos = allFields.filter(info => info.fieldName === 'posts');
