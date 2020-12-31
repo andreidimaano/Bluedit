@@ -59,7 +59,7 @@ const main = async () => {
                 sameSite: 'lax', //csrf
                 secure: ___prod__, //cookie only works in https
             },
-            secret: 'pooopywoopy',
+            secret:,
             resave: false,
         })
     )
