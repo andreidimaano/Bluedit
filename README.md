@@ -1,6 +1,10 @@
 <h1 align="center">
 :blue_book: Bluedit
 </h1>
+
+![alt text](https://github.com/andreidimaano/Bluedit/blob/main/image/homepage.png?raw=true)
+![alt text](https://github.com/andreidimaano/Bluedit/blob/main/image/reddit.jpg?raw=true)
+
 <p align="center">
 I use reddit pretty often, and I was looking for a project to work on during winter break. I decided to go through Ben Awad's <a href="https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=40168s">full stack tutorial</a>. I made changes to the UI so that it would reflect the actual reddit website. Overall, this project really helped me understand how to frontend and backend components work together. Below are some notes I took, feel free to read my thoughts or comment if I'm wrong about anything!
 </p>
@@ -8,6 +12,8 @@ I use reddit pretty often, and I was looking for a project to work on during win
 <h1 align="center">
 🏋️ Tech Stack
 </h1>
+
+
 
 ## 👨‍💻 Backend
 ### Apollo GraphQL
